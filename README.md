@@ -18,7 +18,7 @@ Using NEURON for simulation (via pyneuroml)
 From NML2 descriptions:
 
 ```bash
-python build_GoC_network.py   #
+python build_GoC_network.py
 ```
 Generates:
 - [NeuroML2 document for network](gocNetwork.nml)
