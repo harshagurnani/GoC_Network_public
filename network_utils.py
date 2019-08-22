@@ -38,7 +38,7 @@ def GoC_density_locate( density=4607, x=350,y=350,z=80, seed=-1):
 	#id = np.argsort( GoC_pos[:,1]+GoC_pos[:,2] )
 	return GoC_pos
 
-def GJ_conn( GoC_pos, prob_type='Boltzmann', GJw_type='Vervaeke2010' , seed=-1):
+def GJ_conn( GoC_pos, prob_type='Boltzmann', GJw_type='Vervaeke2010' , nDend=1,seed=-1):
 	# modelling as single Gap junction between cells/mm3
 	if seed != -1:
 		np.random.seed(seed+3000)
@@ -57,7 +57,9 @@ def GJ_conn( GoC_pos, prob_type='Boltzmann', GJw_type='Vervaeke2010' , seed=-1):
 		GJ_cond = set_GJ_strength_Vervaeke2010( np.asarray([ radDist[GJ_pairs[jj,0], GJ_pairs[jj,1]] for jj in range(GJ_pairs.shape[0]) ]) ) #list of gj conductance for corresponding pair
 	elif GJw_type == 'Szo16_oneGJ':
 		GJ_cond = set_GJ_strength_Szo2016_oneGJ( np.asarray([ radDist[GJ_pairs[jj,0], GJ_pairs[jj,1]] for jj in range(GJ_pairs.shape[0]) ]) )
-	return GJ_pairs, GJ_cond
+
+	GJ_loc = np.random.randint( nDend, size=GJ_pairs.shape )
+	return GJ_pairs, GJ_cond, GJ_loc
 
 def connProb_Boltzmann( radDist, seed=-1 ):
 	# Coupling prob as Boltzmann function - from Vervaeke 2010
@@ -80,7 +82,7 @@ def set_GJ_strength_Szo2016_oneGJ( radDist, seed=-1 ):
 	# Exponential fall-off of coupling coefficient, convert to GJ_cond as linear scaling
 	CC = -2.3 + 29.7*np.exp(-radDist/70.4)	#Coupling coefficient
 	#print(CC.shape)
-	GJw = 2*np.around(CC/5)
+	GJw = np.around(CC/5)
 	return GJw
 	
 

@@ -8,16 +8,17 @@ import numpy as np
 from scipy.spatial import distance
 import math
 import pickle as pkl
-
 import sys
-import os.path
+from pathlib import Path
 import initialize_network_params as inp
 
 def create_GoC_network( duration, dt, seed, runid, run=False):
 
 	### ---------- Load Params
 	noPar = True
-	if os.path.isfile('params_file.pkl'):
+	pfile = Path('params_file.pkl')
+	if pfile.exists():
+		print('Reading parameters from file:')
 		file = open('params_file.pkl','rb')
 		params_list = pkl.load(file)
 		if len(params_list)>runid:
@@ -25,7 +26,7 @@ def create_GoC_network( duration, dt, seed, runid, run=False):
 			file.close()
 	if noPar:
 		p = inp.get_simulation_params( runid )
-
+    
 	### ---------- Component types
 	goc_filename = 'GoC.cell.nml'							# Golgi cell with channels
 	goc_file = pynml.read_neuroml2_file( goc_filename )
@@ -111,8 +112,9 @@ def create_GoC_network( duration, dt, seed, runid, run=False):
 		
 	GoCCoupling = nml.ElectricalProjection( id="gocGJ", presynaptic_population=goc_pop.id, postsynaptic_population=goc_pop.id )
 	net.electrical_projections.append( GoCCoupling )
+	dend_id = [1,2,5]
 	for jj in range( p["GJ_pairs"].shape[0] ):
-		conn = nml.ElectricalConnectionInstanceW( id=jj, pre_cell='../{}/{}/{}'.format(goc_pop.id, p["GJ_pairs"][jj,0], goc_type.id), pre_segment='1', pre_fraction_along='0.5', post_cell='../{}/{}/{}'.format(goc_pop.id, p["GJ_pairs"][jj,1], goc_type.id), post_segment='1', post_fraction_along='0.5', synapse=gj.id, weight=p["GJ_wt"][jj] )
+		conn = nml.ElectricalConnectionInstanceW( id=jj, pre_cell='../{}/{}/{}'.format(goc_pop.id, p["GJ_pairs"][jj,0], goc_type.id), pre_segment=dend_id[p["GJ_loc"][jj,0]], pre_fraction_along='0.5', post_cell='../{}/{}/{}'.format(goc_pop.id, p["GJ_pairs"][jj,1], goc_type.id), post_segment=dend_id[p["GJ_loc"][jj,1]], post_fraction_along='0.5', synapse=gj.id, weight=p["GJ_wt"][jj] )
 		GoCCoupling.electrical_connection_instance_ws.append( conn )
 		
 		
