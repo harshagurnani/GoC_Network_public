@@ -17,7 +17,7 @@ Using NEURON for simulation (via pyneuroml)
 
 From NML2 descriptions:
 
-```python
+```bash
 python build_GoC_network.py   #
 ```
 Generates:
@@ -28,12 +28,12 @@ Generates:
 
 And compiles Mod files and runs the Nrn-python simulation if run==True
 
-In new format, network parameters can be initialised and saved:
-```python
+In new format, 
+```bash
 python initialize_network_params.py
 ```
 and the new network generator loads the params.pkl file to read network construction parameters (with an optional ID):
-```python 
+```bash
 python generate_network.py
 python generate_network.py 2
 ```
@@ -48,7 +48,7 @@ I'm currently editing the nrn-python file for random number generator seed initi
         return int(hashlib.md5(obj.encode('utf-8')).hexdigest()[0:8],16)  # convert 8 first chars of md5 hash in base 16 to int
 ```
  and then running as:
-```python
+```bash
 python LEMS_sim_gocnetGoCl_nrn.py 
 python LEMS_sim_gocnet_GoCl_run_2_nrn.py 
 
