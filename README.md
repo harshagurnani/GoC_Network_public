@@ -16,7 +16,7 @@ Using NEURON for simulation (via pyneuroml)
 
 
 From NML2 descriptions:
-
+Old format:
 ```bash
 python build_GoC_network.py
 ```
@@ -28,11 +28,11 @@ Generates:
 
 And compiles Mod files and runs the Nrn-python simulation if run==True
 
-In new format, 
+In new format, parameters can be initialised and stored in a separate file (default=10 parameter sets)
 ```bash
 python initialize_network_params.py
 ```
-and the new network generator loads the params.pkl file to read network construction parameters (with an optional ID):
+The new network generator can load the params.pkl file to read network construction parameters (with an optional ID), or use the ID to make a call to the same parameter generation function:
 ```bash
 python generate_network.py
 python generate_network.py 2
