@@ -10,28 +10,28 @@
   }, {
     "name" : "Section_1",
     "id" : "Section_1",
-    "points3d" : [ "0.0, 0.0, 0.0, 3.0", "113.0, 0.0, 0.0, 3.0" ],
+    "points3d" : [ "0.0, 0.0, 0.0, 3.0", "0.0, 0.0, 113.0, 3.0" ],
     "parent" : "Soma",
     "fractionAlong" : 1.0,
     "numberInternalDivisions" : 10
   }, {
     "name" : "dend_1",
     "id" : "dend_1",
-    "points3d" : [ "0.0, 0.0, 0.0, 3.0", "72.0, 87.0, 4.0, 3.0" ],
+    "points3d" : [ "0.0, 0.0, 0.0, 3.0", "4.0, 87.0, 72.0, 3.0" ],
     "parent" : "Soma",
     "fractionAlong" : 1.0,
     "numberInternalDivisions" : 10
   }, {
     "name" : "Section_3",
     "id" : "Section_3",
-    "points3d" : [ "0.0, 0.0, 0.0, 3.0", "72.0, -87.0, 4.0, 3.0" ],
+    "points3d" : [ "0.0, 0.0, 0.0, 3.0", "-4.0, -87.0, 72.0, 3.0" ],
     "parent" : "Soma",
     "fractionAlong" : 1.0,
     "numberInternalDivisions" : 10
   }, {
     "name" : "Section_axon",
     "id" : "Section_axon",
-    "points3d" : [ "0.0, 0.0, 0.0, 2.4", "-1200.0, 0.0, 0.0, 2.4" ],
+    "points3d" : [ "0.0, 0.0, 0.0, 2.4", "0.0, 0.0, -1200.0, 2.4" ],
     "parent" : "Soma",
     "fractionAlong" : 0.0,
     "numberInternalDivisions" : 100
@@ -268,19 +268,19 @@ proc basic_shape() {
     // Section: Section_1, id: Section_1, parent: Soma (entry count 2/100)
     Section_1 { pt3dclear() }
     Section_1 { pt3dadd( 0.0, 0.0, 0.0, 3.0 ) }
-    Section_1 { pt3dadd( 113.0, 0.0, 0.0, 3.0 ) }
+    Section_1 { pt3dadd( 0.0, 0.0, 113.0, 3.0 ) }
     // Section: dend_1, id: dend_1, parent: Soma (entry count 4/100)
     dend_1 { pt3dclear() }
     dend_1 { pt3dadd( 0.0, 0.0, 0.0, 3.0 ) }
-    dend_1 { pt3dadd( 72.0, 87.0, 4.0, 3.0 ) }
+    dend_1 { pt3dadd( 4.0, 87.0, 72.0, 3.0 ) }
     // Section: Section_3, id: Section_3, parent: Soma (entry count 6/100)
     Section_3 { pt3dclear() }
     Section_3 { pt3dadd( 0.0, 0.0, 0.0, 3.0 ) }
-    Section_3 { pt3dadd( 72.0, -87.0, 4.0, 3.0 ) }
+    Section_3 { pt3dadd( -4.0, -87.0, 72.0, 3.0 ) }
     // Section: Section_axon, id: Section_axon, parent: Soma (entry count 8/100)
     Section_axon { pt3dclear() }
     Section_axon { pt3dadd( 0.0, 0.0, 0.0, 2.4 ) }
-    Section_axon { pt3dadd( -1200.0, 0.0, 0.0, 2.4 ) }
+    Section_axon { pt3dadd( 0.0, 0.0, -1200.0, 2.4 ) }
 
 }
 
