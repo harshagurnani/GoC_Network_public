@@ -28,6 +28,16 @@ Generates:
 
 And compiles Mod files and runs the Nrn-python simulation if run==True
 
+In new format, network parameters can be initialised and saved:
+```python
+python initialize_network_params.py
+```
+and the new network generator loads the params.pkl file to read network construction parameters (with an optional ID):
+```python 
+python generate_network.py
+python generate_network.py 2
+```
+
 I'm currently editing the nrn-python file for random number generator seed initialisation in Python 3,x {just change the function below as copied),
 ```python
 #######
@@ -40,4 +50,6 @@ I'm currently editing the nrn-python file for random number generator seed initi
  and then running as:
 ```python
 python LEMS_sim_gocnetGoCl_nrn.py 
+python LEMS_sim_gocnet_GoCl_run_2_nrn.py 
+
 ```
