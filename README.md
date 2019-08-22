@@ -28,7 +28,16 @@ Generates:
 
 And compiles Mod files and runs the Nrn-python simulation if run==True
 
-I'm currently editing the nrn-python file for random number generator seed initialisation in Python 3,x, and then running as:
+I'm currently editing the nrn-python file for random number generator seed initialisation in Python 3,x {just change the function below as copied),
+```python
+#######
+    # Hash function to use in generation of random value
+    # This is copied from NetPyNE: https://github.com/Neurosim-lab/netpyne/blob/master/netpyne/simFuncs.py
+    ###############################################################################
+    def _id32 (self,obj): 
+        return int(hashlib.md5(obj.encode('utf-8')).hexdigest()[0:8],16)  # convert 8 first chars of md5 hash in base 16 to int
+```
+ and then running as:
 ```python
 python LEMS_sim_gocnetGoCl_nrn.py 
 ```
