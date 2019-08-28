@@ -28,7 +28,7 @@ def create_GoC_network( duration, dt, seed, runid, run=False):
 		p = inp.get_simulation_params( runid )
     
 	### ---------- Component types
-	goc_filename = 'GoC.cell.nml'							# Golgi cell with channels
+	goc_filename = 'GoC_2Pools.cell.nml'							# Golgi cell with channels
 	goc_file = pynml.read_neuroml2_file( goc_filename )
 	goc_type = goc_file.cells[0]
 	goc_ref = nml.IncludeType( href=goc_filename )

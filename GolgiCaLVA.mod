@@ -11,7 +11,7 @@ ENDCOMMENT
 
 NEURON {
     SUFFIX GolgiCaLVA
-    USEION ca READ eca WRITE ica VALENCE 2 ? Assuming valence = 2 (Ca ion); TODO check this!!
+    USEION ca2 READ eca2 WRITE ica2 VALENCE 2 ? Assuming valence = 2 (Ca ion); TODO check this!!
     
     RANGE gion                           
     RANGE gmax                              : Will be changed when ion channel mechanism placed on cell!
@@ -124,8 +124,8 @@ ASSIGNED {
     v (mV)
     celsius (degC)
     temperature (K)
-    eca (mV)
-    ica (mA/cm2)
+    eca2 (mV)
+    ica2 (mA/cm2)
     
     
     m_timeCourse_V                         : derived variable
@@ -211,7 +211,7 @@ BREAKPOINT {
     g = conductance  *  fopen ? evaluable
     gion = gmax * fopen 
     
-    ica = gion * (v - eca)
+    ica2 = gion * (v - eca2)
     
 }
 
