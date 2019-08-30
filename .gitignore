@@ -7,3 +7,6 @@
 /LEMS_*_nrn.py
 *.pyc
 /x86_64
+*.dat
+*.spikes
+LEMS_sim*.xml
