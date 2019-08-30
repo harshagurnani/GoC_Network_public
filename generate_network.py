@@ -85,7 +85,7 @@ def create_GoC_network( duration, dt, seed, runid, run=False):
 	
 	
 	### ------------ Connectivity
-'''
+	'''
 	### 1. Background excitatory inputs: 	MF to GoC populations
 	MFProjection = nml.Projection(id="MFtoGoC", presynaptic_population=MF_Poisson_pop.id, postsynaptic_population=goc_pop.id, synapse=MFSyn_type.id)
 	net.projections.append(MFProjection)
