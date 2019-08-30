@@ -1,0 +1,138 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.3.15 (libNeuroML v0.2.47)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="sim_gocnetGoCl"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="gocNetwork.nml"/>
+    <Include file="GoC.cell.nml"/>
+    <Include file="Golgi_Na.channel.nml"/>
+    <Include file="Golgi_NaR.channel.nml"/>
+    <Include file="Golgi_NaP.channel.nml"/>
+    <Include file="Golgi_KA.channel.nml"/>
+    <Include file="Golgi_SK2.channel.nml"/>
+    <Include file="Golgi_KM.channel.nml"/>
+    <Include file="Golgi_KV.channel.nml"/>
+    <Include file="Golgi_BK.channel.nml"/>
+    <Include file="Golgi_CaHVA.channel.nml"/>
+    <Include file="Golgi_CaLVA.channel.nml"/>
+    <Include file="Golgi_HCN1f.channel.nml"/>
+    <Include file="Golgi_HCN1s.channel.nml"/>
+    <Include file="Golgi_HCN2f.channel.nml"/>
+    <Include file="Golgi_HCN2s.channel.nml"/>
+    <Include file="Golgi_lkg.channel.nml"/>
+    <Include file="Golgi_CALC.nml"/>
+    <Include file="MF_GoC_Syn.nml"/>
+    <Include file="MF_GoC_SynMult.nml"/>
+   
+    <Simulation id="sim_gocnetGoCl" length="5000ms" step="0.025ms" target="gocNetwork" seed="123">  <!-- Note seed: ensures same random numbers used every run -->
+        
+        <OutputFile id="Volts_file" fileName="sim_gocnetGoCl.v.dat">
+            <OutputColumn id="0" quantity="GoClPop/0/GoCl/v"/> 
+            <OutputColumn id="1" quantity="GoClPop/1/GoCl/v"/> 
+            <OutputColumn id="2" quantity="GoClPop/2/GoCl/v"/> 
+            <OutputColumn id="3" quantity="GoClPop/3/GoCl/v"/> 
+            <OutputColumn id="4" quantity="GoClPop/4/GoCl/v"/> 
+            <OutputColumn id="5" quantity="GoClPop/5/GoCl/v"/> 
+            <OutputColumn id="6" quantity="GoClPop/6/GoCl/v"/> 
+            <OutputColumn id="7" quantity="GoClPop/7/GoCl/v"/> 
+            <OutputColumn id="8" quantity="GoClPop/8/GoCl/v"/> 
+            <OutputColumn id="9" quantity="GoClPop/9/GoCl/v"/> 
+            <OutputColumn id="10" quantity="GoClPop/10/GoCl/v"/> 
+            <OutputColumn id="11" quantity="GoClPop/11/GoCl/v"/> 
+            <OutputColumn id="12" quantity="GoClPop/12/GoCl/v"/> 
+            <OutputColumn id="13" quantity="GoClPop/13/GoCl/v"/> 
+            <OutputColumn id="14" quantity="GoClPop/14/GoCl/v"/> 
+            <OutputColumn id="15" quantity="GoClPop/15/GoCl/v"/> 
+            <OutputColumn id="16" quantity="GoClPop/16/GoCl/v"/> 
+            <OutputColumn id="17" quantity="GoClPop/17/GoCl/v"/> 
+            <OutputColumn id="18" quantity="GoClPop/18/GoCl/v"/> 
+            <OutputColumn id="19" quantity="GoClPop/19/GoCl/v"/> 
+            <OutputColumn id="20" quantity="GoClPop/20/GoCl/v"/> 
+            <OutputColumn id="21" quantity="GoClPop/21/GoCl/v"/> 
+            <OutputColumn id="22" quantity="GoClPop/22/GoCl/v"/> 
+            <OutputColumn id="23" quantity="GoClPop/23/GoCl/v"/> 
+            <OutputColumn id="24" quantity="GoClPop/24/GoCl/v"/> 
+            <OutputColumn id="25" quantity="GoClPop/25/GoCl/v"/> 
+            <OutputColumn id="26" quantity="GoClPop/26/GoCl/v"/> 
+            <OutputColumn id="27" quantity="GoClPop/27/GoCl/v"/> 
+            <OutputColumn id="28" quantity="GoClPop/28/GoCl/v"/> 
+            <OutputColumn id="29" quantity="GoClPop/29/GoCl/v"/> 
+            <OutputColumn id="30" quantity="GoClPop/30/GoCl/v"/> 
+            <OutputColumn id="31" quantity="GoClPop/31/GoCl/v"/> 
+            <OutputColumn id="32" quantity="GoClPop/32/GoCl/v"/> 
+            <OutputColumn id="33" quantity="GoClPop/33/GoCl/v"/> 
+            <OutputColumn id="34" quantity="GoClPop/34/GoCl/v"/> 
+            <OutputColumn id="35" quantity="GoClPop/35/GoCl/v"/> 
+            <OutputColumn id="36" quantity="GoClPop/36/GoCl/v"/> 
+            <OutputColumn id="37" quantity="GoClPop/37/GoCl/v"/> 
+            <OutputColumn id="38" quantity="GoClPop/38/GoCl/v"/> 
+            <OutputColumn id="39" quantity="GoClPop/39/GoCl/v"/> 
+            <OutputColumn id="40" quantity="GoClPop/40/GoCl/v"/> 
+            <OutputColumn id="41" quantity="GoClPop/41/GoCl/v"/> 
+            <OutputColumn id="42" quantity="GoClPop/42/GoCl/v"/> 
+            <OutputColumn id="43" quantity="GoClPop/43/GoCl/v"/> 
+            <OutputColumn id="44" quantity="GoClPop/44/GoCl/v"/> 
+        </OutputFile>
+        
+        <EventOutputFile id="Events_file" fileName="sim_gocnetGoCl.v.spikes" format="ID_TIME">
+            <EventSelection id="0" select="GoClPop/0/GoCl" eventPort="spike"/> 
+            <EventSelection id="1" select="GoClPop/1/GoCl" eventPort="spike"/> 
+            <EventSelection id="2" select="GoClPop/2/GoCl" eventPort="spike"/> 
+            <EventSelection id="3" select="GoClPop/3/GoCl" eventPort="spike"/> 
+            <EventSelection id="4" select="GoClPop/4/GoCl" eventPort="spike"/> 
+            <EventSelection id="5" select="GoClPop/5/GoCl" eventPort="spike"/> 
+            <EventSelection id="6" select="GoClPop/6/GoCl" eventPort="spike"/> 
+            <EventSelection id="7" select="GoClPop/7/GoCl" eventPort="spike"/> 
+            <EventSelection id="8" select="GoClPop/8/GoCl" eventPort="spike"/> 
+            <EventSelection id="9" select="GoClPop/9/GoCl" eventPort="spike"/> 
+            <EventSelection id="10" select="GoClPop/10/GoCl" eventPort="spike"/> 
+            <EventSelection id="11" select="GoClPop/11/GoCl" eventPort="spike"/> 
+            <EventSelection id="12" select="GoClPop/12/GoCl" eventPort="spike"/> 
+            <EventSelection id="13" select="GoClPop/13/GoCl" eventPort="spike"/> 
+            <EventSelection id="14" select="GoClPop/14/GoCl" eventPort="spike"/> 
+            <EventSelection id="15" select="GoClPop/15/GoCl" eventPort="spike"/> 
+            <EventSelection id="16" select="GoClPop/16/GoCl" eventPort="spike"/> 
+            <EventSelection id="17" select="GoClPop/17/GoCl" eventPort="spike"/> 
+            <EventSelection id="18" select="GoClPop/18/GoCl" eventPort="spike"/> 
+            <EventSelection id="19" select="GoClPop/19/GoCl" eventPort="spike"/> 
+            <EventSelection id="20" select="GoClPop/20/GoCl" eventPort="spike"/> 
+            <EventSelection id="21" select="GoClPop/21/GoCl" eventPort="spike"/> 
+            <EventSelection id="22" select="GoClPop/22/GoCl" eventPort="spike"/> 
+            <EventSelection id="23" select="GoClPop/23/GoCl" eventPort="spike"/> 
+            <EventSelection id="24" select="GoClPop/24/GoCl" eventPort="spike"/> 
+            <EventSelection id="25" select="GoClPop/25/GoCl" eventPort="spike"/> 
+            <EventSelection id="26" select="GoClPop/26/GoCl" eventPort="spike"/> 
+            <EventSelection id="27" select="GoClPop/27/GoCl" eventPort="spike"/> 
+            <EventSelection id="28" select="GoClPop/28/GoCl" eventPort="spike"/> 
+            <EventSelection id="29" select="GoClPop/29/GoCl" eventPort="spike"/> 
+            <EventSelection id="30" select="GoClPop/30/GoCl" eventPort="spike"/> 
+            <EventSelection id="31" select="GoClPop/31/GoCl" eventPort="spike"/> 
+            <EventSelection id="32" select="GoClPop/32/GoCl" eventPort="spike"/> 
+            <EventSelection id="33" select="GoClPop/33/GoCl" eventPort="spike"/> 
+            <EventSelection id="34" select="GoClPop/34/GoCl" eventPort="spike"/> 
+            <EventSelection id="35" select="GoClPop/35/GoCl" eventPort="spike"/> 
+            <EventSelection id="36" select="GoClPop/36/GoCl" eventPort="spike"/> 
+            <EventSelection id="37" select="GoClPop/37/GoCl" eventPort="spike"/> 
+            <EventSelection id="38" select="GoClPop/38/GoCl" eventPort="spike"/> 
+            <EventSelection id="39" select="GoClPop/39/GoCl" eventPort="spike"/> 
+            <EventSelection id="40" select="GoClPop/40/GoCl" eventPort="spike"/> 
+            <EventSelection id="41" select="GoClPop/41/GoCl" eventPort="spike"/> 
+            <EventSelection id="42" select="GoClPop/42/GoCl" eventPort="spike"/> 
+            <EventSelection id="43" select="GoClPop/43/GoCl" eventPort="spike"/> 
+            <EventSelection id="44" select="GoClPop/44/GoCl" eventPort="spike"/> 
+        </EventOutputFile>
+        
+    </Simulation>
+
+</Lems>
