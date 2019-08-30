@@ -14,8 +14,11 @@ import sys
 from pathlib import Path
 import initialize_network_params as inp
 
-def create_GoC_network( duration, dt, seed, runid, run=False):
+def create_GoC_network( duration, dt, seed, runid, run=False, girk=False):
 
+	wGirk = ''
+	if girk:
+		wGirk ='_wGIRK'
 	### ---------- Load Params
 	noPar = True
 	pfile = Path('params_file.pkl')
@@ -30,7 +33,10 @@ def create_GoC_network( duration, dt, seed, runid, run=False):
 		p = inp.get_simulation_params( runid )
     
 	### ---------- Component types
-	goc_filename = '../Cells/Golgi/GoC_2Pools.cell.nml'							# Golgi cell with channels
+	if girk:
+		goc_filename = '../Cells/Golgi/GoC_00000_wGIRK.cell.nml'							# Golgi cell with channels
+	else:
+		goc_filename = '../Cells/Golgi/GoC_2Pools.cell.nml'							# Golgi cell with channels
 	goc_file = pynml.read_neuroml2_file( goc_filename )
 	goc_type = goc_file.cells[0]
 	goc_ref = nml.IncludeType( href=goc_filename )
@@ -122,7 +128,7 @@ def create_GoC_network( duration, dt, seed, runid, run=False):
 		
 	### --------------  Write files
 		
-	net_filename = 'gocNetwork.net.nml'
+	net_filename = 'gocNetwork'+ wGirk +'.net.nml'
 	pynml.write_neuroml2_file( net_doc, net_filename )
 
 	simid = 'sim_gocnet_'+goc_type.id+'_run_{}'.format(runid)
@@ -159,8 +165,11 @@ def create_GoC_network( duration, dt, seed, runid, run=False):
 	
 if __name__ =='__main__':
 	runid=0
+	girk=False
 	if len(sys.argv)>1:
 		runid=int(sys.argv[1])
+	if len(sys.argv)>2:
+		girk=sys.argv[2]
 	print('Generating network using parameters for runid=', runid)
-	res = create_GoC_network( duration = 5000, dt=0.025, seed = 123, runid=runid)
+	res = create_GoC_network( duration = 5000, dt=0.025, seed = 123, runid=runid, girk=girk)
 	print(res)

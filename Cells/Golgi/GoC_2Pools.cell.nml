@@ -199,7 +199,7 @@
 				<channelDensityNernst condDensity="0.25 mS_per_cm2" id="Ca_LVA_soma_group" ionChannel="GolgiCaLVA" segmentGroup="soma_group" ion="ca2"/>
 				
 				
-				<channelDensity condDensity="0.03 mS_per_cm2" id="GIRK_dend_group" ionChannel="GIRK" segmentGroup="dendrite_group" ion="k" erev="-84.69mV" />
+				<channelDensity condDensity="0.15 mS_per_cm2" id="GIRK_dend_group" ionChannel="GIRK" segmentGroup="dendrite_group" ion="k" erev="-84.69mV" />
 				
 				<!-- general properties-->
 				<spikeThresh value="0.0 mV"/>
@@ -220,5 +220,8 @@
 
 
     </cell>
+	<network id="network" type="networkWithTemperature"  temperature="23 degC">
+        <population id="Golgi" component="GoCl_2Pools" size="1"/>
+    </network>
 
 </neuroml>

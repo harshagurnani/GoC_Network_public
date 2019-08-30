@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 import initialize_cell_params as icp
 
-def create_GoC( runid, usefile='cellparams_file.pkl' ):
+def create_GoC( runid, usefile='cellparams_file.pkl', girk=False ):
 
 	### ---------- Load Params
 	noPar = True
@@ -29,11 +29,10 @@ def create_GoC( runid, usefile='cellparams_file.pkl' ):
 	if noPar:
 		p = icp.get_channel_params( runid )
     
-	
-
-
 	# Creating document for cell
 	gocID = 'GoC_'+format(runid, '05d')
+	if girk:
+		gocID = gocID + '_wGIRK'
 	goc = nml.Cell( id=gocID )		#--------simid	
 	cell_doc = nml.NeuroMLDocument( id=gocID )
 	cell_doc.cells.append( goc )
@@ -88,6 +87,11 @@ def create_GoC( runid, usefile='cellparams_file.pkl' ):
 	
 	calc2_fname = '../../Mechanisms/Golgi_CALC2.nml'
 	cell_doc.includes.append( nml.IncludeType( href=calc2_fname) )
+	
+	
+	girk_fname = '../../Mechanisms/GIRK.channel.nml'
+	cell_doc.includes.append( nml.IncludeType( href=girk_fname) )
+	
 	
 	goc_2pools_fname = 'GoC_2Pools.cell.nml'
 	### ------Biophysical Properties
@@ -230,6 +234,21 @@ def create_GoC( runid, usefile='cellparams_file.pkl' ):
 										)
 	memb.channel_density_nernsts.append( chan_lva)
 	
+	#Add GIRK
+	if girk:
+		girk_density = "0.15 mS_per_cm2"
+	else:
+		girk_density = "0.006 mS_per_cm2"
+	chan_girk = nml.ChannelDensity( ion_channel=pynml.read_neuroml2_file(girk_fname).ion_channel[0].id,
+									cond_density=girk_density,
+									erev="-84.69 mV",
+									ion="k",
+									id="GIRK_dendrite_group",
+									segment_groups="dendrite_group"
+								  )
+	memb.channel_densities.append( chan_girk)
+	
+	
 	memb.spike_threshes.append(nml.SpikeThresh("0 mV"))
 	memb.specific_capacitances.append(nml.SpecificCapacitance("1.0 uF_per_cm2"))
 	memb.init_memb_potentials.append( nml.InitMembPotential("-60 mV") )
@@ -246,10 +265,13 @@ def create_GoC( runid, usefile='cellparams_file.pkl' ):
 if __name__ =='__main__':
 	runid=0
 	usefile='cellparams_file.pkl'
+	girk=False
 	if len(sys.argv)>1:
 		runid=int(sys.argv[1])
 	if len(sys.argv)>2:
 		usefile=sys.argv[2]
+	if len(sys.argv)>3:
+		girk=sys.argv[3]
 	print('Generating Golgi cell using parameters for simid=', runid)
-	res = create_GoC( runid=runid, usefile=usefile)
+	res = create_GoC( runid=runid, usefile=usefile, girk=girk)
 	print(res)
