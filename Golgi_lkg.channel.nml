@@ -6,9 +6,9 @@
 
     <notes>Channel file containing passive Leak channel. </notes>
 
-    <ionChannelPassive id="LeakConductance" conductance="10pS">
+    <ionChannel id="LeakConductance" conductance="10pS" type="ionChannelPassive">
         <notes>Leak conductance</notes>
-    </ionChannelPassive>
+    </ionChannel>
 
 
 </neuroml>
