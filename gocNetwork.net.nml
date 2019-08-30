@@ -1,5 +1,5 @@
 <neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="gocNetwork">
-    <include href="GoC.cell.nml"/>
+    <include href="GoC_2Pools.cell.nml"/>
     <include href="Golgi_lkg.channel.nml"/>
 	<include href="MF_GoC_Syn.nml"/>
     <include href="MF_GoC_SynMult.nml"/>
@@ -7,7 +7,7 @@
     <spikeGeneratorPoisson id="MF_Poisson" averageRate="5 Hz"/>
     <transientPoissonFiringSynapse id="MF_Burst" averageRate="100 Hz" delay="2000 ms" duration="500 ms" synapse="MFGoC_SynMult" spikeTarget="./MFGoC_SynMult"/>
     <network id="gocNetwork" type="networkWithTemperature" temperature="23 degC">
-        <population id="GoCl_2PoolsPop" component="GoCl" size="45" type="populationList">
+        <population id="GoCl_2PoolsPop" component="GoCl_2Pools" size="45" type="populationList">
 			<annotation>
                 <property tag="color" value="0.19921875 0.59765625 0.99609375"/>
             </annotation>
