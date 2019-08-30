@@ -11,32 +11,26 @@
 ### Morphology
 - Currently has reduced morphology in [GoC.cell.nml](https://github.com/harshagurnani/GoC_Network_public/blob/master/Golgi.cell.nml)
 
+
+## Cells
+- GoC.cell.nml has a single calcium pool to which both calcium currents write (slower spike rate due to more KAHP)
+- GoC_2Pools.cell.nml has 2 Calcium pools, one of which is shielded from KAHP
+- GoC_00XXX.cell.nml are 2Pool cells with different channel densities and spontaneous firing rate between 7 +/- 2 Hz
+
 ## Running simulations
 Using NEURON for simulation (via pyneuroml)
 
-
-From NML2 descriptions:
-Old format:
-```bash
-python build_GoC_network.py
-```
-Generates:
-- [NeuroML2 document for network](gocNetwork.nml)
-- [LEMS simulation file](LEMS_sim_gocnetGoCl.xml)
-- NML->mod file, hoc file for cell
-- [NEURON-python simulation file](LEMS_sim_gocnetGoCl_nrn.py)
-
-And compiles Mod files and runs the Nrn-python simulation if run==True
-
-In new format, parameters can be initialised and stored in a separate file (default=10 parameter sets)
+Parameters can be initialised and stored in a separate file (default=10 parameter sets)
 ```bash
 python initialize_network_params.py
 ```
+
 The new network generator can load the params.pkl file to read network construction parameters (with an optional ID), or use the ID to make a call to the same parameter generation function:
 ```bash
 python generate_network.py
 python generate_network.py 2
 ```
+This generates all mod files, network scripts, and Neuron-python simulation scripts.
 
 I'm currently editing the nrn-python file for random number generator seed initialisation in Python 3,x {just change the function below as copied),
 ```python
@@ -47,9 +41,10 @@ I'm currently editing the nrn-python file for random number generator seed initi
     def _id32 (self,obj): 
         return int(hashlib.md5(obj.encode('utf-8')).hexdigest()[0:8],16)  # convert 8 first chars of md5 hash in base 16 to int
 ```
- and then running as:
+Or directly use Python 2.7
+
+To run simulation::
 ```bash
 python LEMS_sim_gocnetGoCl_nrn.py 
 python LEMS_sim_gocnet_GoCl_run_2_nrn.py 
-
 ```
