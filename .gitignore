@@ -2,8 +2,8 @@
 *.c
 *.o
 *.dll
-/*.mod
-/*.hoc
+*.mod
+*.hoc
 /LEMS_*_nrn.py
 *.pyc
 /x86_64

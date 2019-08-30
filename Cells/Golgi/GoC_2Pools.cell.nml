@@ -29,6 +29,8 @@
     <include href="../../Mechanisms/Golgi_HCN2f.channel.nml"/>
     <include href="../../Mechanisms/Golgi_HCN2s.channel.nml"/>
 
+	<include href="../../Mechanisms/GIRK.channel.nml"/>
+    
     <include href="../../Mechanisms/Golgi_lkg.channel.nml"/>
     
     <include href="../../Mechanisms/Golgi_CALC.nml"/>
@@ -196,6 +198,8 @@
 				
 				<channelDensityNernst condDensity="0.25 mS_per_cm2" id="Ca_LVA_soma_group" ionChannel="GolgiCaLVA" segmentGroup="soma_group" ion="ca2"/>
 				
+				
+				<channelDensity condDensity="0.03 mS_per_cm2" id="GIRK_dend_group" ionChannel="GIRK" segmentGroup="dendrite_group" ion="k" erev="-84.69mV" />
 				
 				<!-- general properties-->
 				<spikeThresh value="0.0 mV"/>
