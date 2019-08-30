@@ -1,6 +1,7 @@
 <neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="gocNetwork">
     <include href="GoC.cell.nml"/>
-    <include href="MF_GoC_Syn.nml"/>
+    <include href="Golgi_lkg.channel.nml"/>
+	<include href="MF_GoC_Syn.nml"/>
     <include href="MF_GoC_SynMult.nml"/>
     <gapJunction id="GJ_0" conductance="426pS"/>
     <spikeGeneratorPoisson id="MF_Poisson" averageRate="5 Hz"/>
@@ -491,6 +492,21 @@
             <electricalConnectionInstanceW id="223" preCell="../GoCl_2PoolsPop/40/GoCl_2Pools" preSegment="5" postCell="../GoCl_2PoolsPop/42/GoCl_2Pools" postSegment="2" synapse="GJ_0" weight="1."/>
             <electricalConnectionInstanceW id="224" preCell="../GoCl_2PoolsPop/40/GoCl_2Pools" preSegment="2" postCell="../GoCl_2PoolsPop/43/GoCl_2Pools" postSegment="2" synapse="GJ_0" weight="1."/>
         </electricalProjection>
-        
+        <explicitInput target="../GoCl_2PoolsPop/28/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/28/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/28/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/28/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/8/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/8/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/8/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/8/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/24/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/24/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/24/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/24/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/38/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/38/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/38/GoCl_2Pools" input="MF_Burst"/>
+        <explicitInput target="../GoCl_2PoolsPop/38/GoCl_2Pools" input="MF_Burst"/>
     </network>
 </neuroml>
