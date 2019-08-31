@@ -1,4 +1,6 @@
 import numpy as np
+from numpy.core import multiarray
+
 from scipy.spatial import distance
 import math
 import pickle as pkl
@@ -188,4 +190,35 @@ def PF_conn( nPF, PF_loc_type, volume, PF_density, GoC_pos,  PF_conntype, PF_con
 		PF_pairs = PF_pairs[:,[((abs(PF_pos[PF_pairs[0,jj],0]- GoC_pos[PF_pairs[1,jj],0])<PF_conndist[0])& (abs(PF_pos[PF_pairs[0,jj],1]- GoC_pos[PF_pairs[1,jj],1])<PF_conndist[1]) & (abs(PF_pos[PF_pairs[0,jj],2]- GoC_pos[PF_pairs[1,jj],2])<PF_conndist[2])) for jj in range(PF_pairs.shape[1])]]
 
 	return nPF, PF_pos, PF_pairs
+	
+def connect_inputs( maxn=0, frac= 0, density=6000, volume=[350,350,80], mult=0, loc_type='random', connType='random_prob', connProb=0.5, connGoC=0, connWeight=1, connDist=[0], GoC_pos=[], seed=-1):
+	
+	if frac==0:
+		return 0, [], [], []
+	else:
+		nInp, Inp_pos = locate_GoC( maxn*frac, volume, 'density', density, seed=seed )
+		
+	nGoC = GoC_pos.shape[0]
+
+	### --- to add code for rosettes
+	
+	if connType == 'random_prob':
+		conn_pairs = randdist_MF_syn( nInp, nGoC, pConn=connProb, nConn=connGoC )
+	elif connType == 'random_sample':
+		conn_pairs = randdist_MF_syn( nInp, nGoC, pConn=connProb, nConn=connGoC )
+	
+	if connDist[0] > 0:
+		# prune distal pairs
+		if len(connDist)==3:
+			for jj in range(3):
+				if connDist[jj]<=0:
+					connDist[jj]=1e9
+			conn_pairs = conn_pairs[:,[((abs(Inp_pos[conn_pairs[0,jj],0]- GoC_pos[conn_pairs[1,jj],0])<connDist[0])& (abs(Inp_pos[conn_pairs[0,jj],1]- GoC_pos[conn_pairs[1,jj],1])<connDist[1]) & (abs(Inp_pos[conn_pairs[0,jj],2]- GoC_pos[conn_pairs[1,jj],2])<connDist[2])) for jj in range(conn_pairs.shape[1])]]
+		else:
+			conn_pairs = conn_pairs[:,[((Inp_pos[conn_pairs[0,jj],0]- GoC_pos[conn_pairs[1,jj],0])**2 + (Inp_pos[conn_pairs[0,jj],1]- GoC_pos[conn_pairs[1,jj],1])**2 +(Inp_pos[conn_pairs[0,jj],2]- GoC_pos[conn_pairs[1,jj],2])**2)< connDist**2 for jj in range(conn_pairs.shape[1])]]
+			
+	### --- to add code for weight
+	conn_wt =  get_MF_GoC_synaptic_weights( conn_pairs, Inp_pos, GoC_pos, 'mult', conn_wt=connWeight )
+	
+	return nInp, Inp_pos, conn_pairs, conn_wt
 	

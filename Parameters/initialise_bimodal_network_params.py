@@ -1,7 +1,9 @@
 # Generates file binetwork_params.pkl -> parameters for full model og Golgi network with ON/OFF MF and PF inputs
-# Run as: python initialize_network_params.py
+# Run as: python initialize_bimodal_network_params.py
+# Or load module and call get_simulation_params() withh different arguments
 
 import numpy as np
+from numpy.core import multiarray
 import pickle as pkl
 
 import sys
@@ -105,13 +107,13 @@ def get_simulation_params(simid,
 										 "PF_bg" : 1, 
 										 "Burst" : 4
 									   },
-						  Input_maxD = { "MF_ON" : 300, 
-										 "MF_OFF": 300, 
-										 "MF_bg" : 300, 
+						  Input_maxD = { "MF_ON" : [300], 
+										 "MF_OFF": [300], 
+										 "MF_bg" : [300], 
 										 "PF_ON" : [350, 2000, 500], 
 										 "PF_OFF": [350, 2000, 500], 
 										 "PF_bg" : [350, 2000, 500], 
-										 "Burst" : 0 
+										 "Burst" : [0] 
 									   }
 						  
 						 ):
@@ -143,17 +145,24 @@ def get_simulation_params(simid,
 	
 	for input in input_types:
 		Inp = { "type" : Input_type[input], "rate": Input_rate[input], "delay": Input_delay[input], "duration": Input_durn[input], "syn_type": Input_syn[input] }
-		Inp["nInp"], Inp["pos"], Inp["conn_pairs"], Inp["conn_wt"] = nu.connect_inputs( n=nInputs_max[input], frac= nInputs_frac[input], density=Input_density[input], mult=Input_nRosette[input], loc_type=connType=Input_conn[input], connProb=Input_prob[input], connGoC=Input_nGoC[input], connWeight=Input_wt[input], MFInput_loc_type, volume, MF_density, params["GoC_pos"],  MFInput_conntype, MFInput_connprob, MFInput_connGoC, seed=simid)
+		Inp["nInp"], Inp["pos"], Inp["conn_pairs"], Inp["conn_wt"] = nu.connect_inputs( maxn=nInputs_max[input], frac= nInputs_frac[input], density=Input_density[input], volume=volume, mult=Input_nRosette[input], loc_type=Input_loc[input], connType=Input_conn[input], connProb=Input_prob[input], connGoC=Input_nGoC[input], connWeight=Input_wt[input], connDist=Input_maxD[input], GoC_pos=params["GoC_pos"], seed=simid)
 	
-	
+		tmp={ "conn_pairs": [], "conn_wt" : [] }
+		for pid in usedID:
+			pairid = [x for x in range(Inp["conn_pairs"].shape[1]) if params["GoC_ParamID"][params["conn_pairs"][1,x]]==pid ]
+			tmp["conn_pairs"].append( Inp["conn_pairs"][:,pairid] )
+			tmp["conn_wt"].append( Inp["conn_wt"][pairid] )
+		for key in ["conn_pairs", "conn_wt"] :
+			Inp[key] = tmp[key]
+		for jj in range( nGoC_pop):     
+			Inp["conn_pairs"][jj][1,:]=np.mod(params["conn_pairs"][jj][1,:], popsize)
 		
+		params["Inputs"][input] = Inp
+
+	'''	
 	params["nMF"], params["MF_pos"], params["MF_GoC_pairs"], params["MF_GoC_wt"]=nu.MF_conn( n=nInputs_max[inputs[, MFInput_loc_type, volume, MF_density, params["GoC_pos"],  MFInput_conntype, MFInput_connprob, MFInput_connGoC, seed=simid)
 	params["MF_GoC_pop_pairs"] = []
 	params["MF_GoC_pop_wt"] = []
-	for pid in usedID:
-		pairid = [x for x in range(params["MF_GoC_pairs"].shape[1]) if params["GoC_ParamID"][params["MF_GoC_pairs"][1,x]]==pid ]
-		params["MF_GoC_pop_pairs"].append( params["MF_GoC_pairs"][:,pairid] )
-		params["MF_GoC_pop_wt"].append( params["MF_GoC_wt"][pairid] )
 	
 	for jj in range( nGoC_pop):     
 		params["MF_GoC_pop_pairs"][jj][1,:]=np.mod(params["MF_GoC_pop_pairs"][jj][1,:], popsize)
@@ -178,6 +187,7 @@ def get_simulation_params(simid,
 	
 	for jj in range( nGoC_pop):     
 			params["Burst_conn_pop"][jj]= np.mod(params["Burst_conn_pop"][jj], popsize)
+	'''
 	
 	return params
 	
@@ -185,7 +195,7 @@ def get_simulation_params(simid,
     
 if __name__ =='__main__':
 
-	nSim = 30
+	nSim = 1
 	params_list = [ get_simulation_params(simid) for simid in range(nSim) ]
 	
 	file = open('net_params_file.pkl','wb')
