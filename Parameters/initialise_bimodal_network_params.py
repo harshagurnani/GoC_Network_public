@@ -143,7 +143,7 @@ def get_simulation_params(simid,
 	
 	for input in input_types:
 		Inp = { "type" : Input_type[input], "rate": Input_rate[input], "delay": Input_delay[input], "duration": Input_durn[input], "syn_type": Input_syn[input] }
-		Inp["nInp"], Inp["pos"], Inp["conn_pairs"], Inp["conn_wt"] = nu.connect_inputs( n=nInputs_max[input], frac= nInputs_frac[input], density=Input_density[input], mult=Input_nRosette[input], connType=Input_conn[input], connProb=Input_prob[input], connGoC=Input_nGoC[input], connWeight=Input_wt[input], MFInput_loc_type, volume, MF_density, params["GoC_pos"],  MFInput_conntype, MFInput_connprob, MFInput_connGoC, seed=simid)
+		Inp["nInp"], Inp["pos"], Inp["conn_pairs"], Inp["conn_wt"] = nu.connect_inputs( n=nInputs_max[input], frac= nInputs_frac[input], density=Input_density[input], mult=Input_nRosette[input], loc_type=connType=Input_conn[input], connProb=Input_prob[input], connGoC=Input_nGoC[input], connWeight=Input_wt[input], MFInput_loc_type, volume, MF_density, params["GoC_pos"],  MFInput_conntype, MFInput_connprob, MFInput_connGoC, seed=simid)
 	
 	
 		
