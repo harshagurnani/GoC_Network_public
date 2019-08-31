@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.spatial import distance
 import math
-
+import pickle as pkl
 '''
  Helpers:
 	- Distributing GoC in space
@@ -58,7 +58,7 @@ def GJ_conn( GoC_pos, prob_type='Boltzmann', GJw_type='Vervaeke2010' , nDend=1,s
 	elif GJw_type == 'Szo16_oneGJ':
 		GJ_cond = set_GJ_strength_Szo2016_oneGJ( np.asarray([ radDist[GJ_pairs[jj,0], GJ_pairs[jj,1]] for jj in range(GJ_pairs.shape[0]) ]) )
 
-	GJ_loc = np.random.randint( nDend, size=GJ_pairs.shape )
+	GJ_loc = np.c_[np.random.randint( nDend, size=GJ_pairs.shape ), np.random.random(size=GJ_pairs.shape)] #col 0,1 = dend, col 2,3 = seg
 	return GJ_pairs, GJ_cond, GJ_loc
 
 def connProb_Boltzmann( radDist, seed=-1 ):
@@ -136,4 +136,56 @@ def get_perturbed_GoC( nGoC, Burst_conntype, Burst_connprob, Burst_connGoC, seed
 		
 	
 	return Burst_goc
+
+	
+def find_max_conn(  GoC_pos, GJ_pairs, GJ_wt, method='max_conn' ):
+	nGJ, net_wt, nNbr = vn.gapJuncAnalysis( GJ_pairs, GJ_wt, nGoC=GoC_pos.shape[0] )	
+	if method=='max_conn':
+		max_conn = [np.argmax(nNbr)]
+	elif method=='min_conn':
+		max_conn = [np.argmin(nNbr)]
+	return max_conn
+	
+def get_hetero_GoC_id( nGoC, nGoCPop, densityParams, seed=-1 ):
+	if seed != -1:
+		np.random.seed(seed+8000)
+		
+	file = open( densityParams, 'rb' )
+	allP = pkl.load( file )
+	file.close()
+
+	series = np.random.permutation( len(allP) )
+	id = [allP[ series[x]] for x in range(nGoCPop) ]
+	#id = [ allP[np.random.randint(len(allP))] for jj in range(nGoCPop) ]
+	nCells_per_pop =  nGoC/nGoCPop
+	nGoC = nCells_per_pop*nGoCPop
+	
+	allid=[]
+	for jj in range(nGoCPop):
+		for kk in range(nCells_per_pop):
+			allid.append( id[jj] )
+			
+	aiid=allid.sort()
+	return allid, nGoC
+	
+	
+def PF_conn( nPF, PF_loc_type, volume, PF_density, GoC_pos,  PF_conntype, PF_connprob, PF_connGoC, PF_conndist, seed=-1):
+	if seed != -1:
+		np.random.seed(seed+9000)
+	nPF, PF_pos = locate_GoC( nPF, volume, PF_loc_type, PF_density)
+	
+	nGoC = GoC_pos.shape[0]
+	if PF_conntype == 'random_prob':
+		PF_pairs = randdist_MF_syn( nPF, nGoC, pConn=0.8, nConn=0 )
+	elif PF_conntype == 'random_sample':
+		PF_pairs = randdist_MF_syn( nPF, nGoC, pConn=0, nConn=PF_connGoC )
+	
+	if PF_conndist[0] > 0:
+		# prune distal pairs
+		for jj in range(3):
+			if PF_conndist[jj]<=0:
+				PF_conndist[jj]=1e9
+		PF_pairs = PF_pairs[:,[((abs(PF_pos[PF_pairs[0,jj],0]- GoC_pos[PF_pairs[1,jj],0])<PF_conndist[0])& (abs(PF_pos[PF_pairs[0,jj],1]- GoC_pos[PF_pairs[1,jj],1])<PF_conndist[1]) & (abs(PF_pos[PF_pairs[0,jj],2]- GoC_pos[PF_pairs[1,jj],2])<PF_conndist[2])) for jj in range(PF_pairs.shape[1])]]
+
+	return nPF, PF_pos, PF_pairs
 	
