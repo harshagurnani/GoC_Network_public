@@ -24,7 +24,7 @@ def get_simulation_params(simid,
 						  nGJ_dend =3,
 						  input_types = ["MF_ON", "MF_OFF", "MF_bg", "PF_ON", "PF_OFF", "PF_bg", "Burst"],
 						  nInputs_max = { "MF_ON": 60, "MF_OFF": 60, "MF_bg": 60, "PF_ON" : 300, "PF_OFF": 300, "PF_bg" : 300, "Burst" : 4 },
-						  nInputs_frac = { "MF_ON": 55, "MF_OFF": 35, "MF_bg": 10, "PF_ON" : 45, "PF_OFF": 20, "PF_bg" : 35, "Burst" : 0 },
+						  nInputs_frac = { "MF_ON": .55, "MF_OFF": .35, "MF_bg": .10, "PF_ON" : .45, "PF_OFF": .20, "PF_bg" : .35, "Burst" : 0 },
 						  Input_density = { "MF_ON": 0, "MF_OFF": 0, "MF_bg": 0, "PF_ON" : 0, "PF_OFF": 0, "PF_bg" : 0, "Burst" : 0 },
 						  Input_nRosette = { "MF_ON": 0, "MF_OFF": 0, "MF_bg": 0, "PF_ON" : 0, "PF_OFF": 0, "PF_bg" : 0, "Burst" : 0 },
 						  Input_loc  = { "MF_ON" : 'random', 
@@ -142,52 +142,24 @@ def get_simulation_params(simid,
 			params["econn_pop"][pre][post-pre] = { "GJ_pairs": np.mod( gj[pairid,:], popsize), "GJ_wt": wt[pairid], "GJ_loc": loc[pairid,:] }
 		
 	
+	params["Inputs"] = {}
 	
 	for input in input_types:
 		Inp = { "type" : Input_type[input], "rate": Input_rate[input], "delay": Input_delay[input], "duration": Input_durn[input], "syn_type": Input_syn[input] }
 		Inp["nInp"], Inp["pos"], Inp["conn_pairs"], Inp["conn_wt"] = nu.connect_inputs( maxn=nInputs_max[input], frac= nInputs_frac[input], density=Input_density[input], volume=volume, mult=Input_nRosette[input], loc_type=Input_loc[input], connType=Input_conn[input], connProb=Input_prob[input], connGoC=Input_nGoC[input], connWeight=Input_wt[input], connDist=Input_maxD[input], GoC_pos=params["GoC_pos"], seed=simid)
 	
 		tmp={ "conn_pairs": [], "conn_wt" : [] }
-		for pid in usedID:
-			pairid = [x for x in range(Inp["conn_pairs"].shape[1]) if params["GoC_ParamID"][params["conn_pairs"][1,x]]==pid ]
-			tmp["conn_pairs"].append( Inp["conn_pairs"][:,pairid] )
-			tmp["conn_wt"].append( Inp["conn_wt"][pairid] )
-		for key in ["conn_pairs", "conn_wt"] :
-			Inp[key] = tmp[key]
-		for jj in range( nGoC_pop):     
-			Inp["conn_pairs"][jj][1,:]=np.mod(params["conn_pairs"][jj][1,:], popsize)
+		if Inp["nInp"]>0:
+			for pid in usedID:
+				pairid = [x for x in range(Inp["conn_pairs"].shape[1]) if params["GoC_ParamID"][Inp["conn_pairs"][1,x]]==pid ]
+				tmp["conn_pairs"].append( Inp["conn_pairs"][:,pairid] )
+				tmp["conn_wt"].append( Inp["conn_wt"][pairid] )
+			for key in ["conn_pairs", "conn_wt"] :
+				Inp[key] = tmp[key]
+			for jj in range( nGoC_pop):     
+				Inp["conn_pairs"][jj][1,:]=np.mod(Inp["conn_pairs"][jj][1,:], popsize)
 		
 		params["Inputs"][input] = Inp
-
-	'''	
-	params["nMF"], params["MF_pos"], params["MF_GoC_pairs"], params["MF_GoC_wt"]=nu.MF_conn( n=nInputs_max[inputs[, MFInput_loc_type, volume, MF_density, params["GoC_pos"],  MFInput_conntype, MFInput_connprob, MFInput_connGoC, seed=simid)
-	params["MF_GoC_pop_pairs"] = []
-	params["MF_GoC_pop_wt"] = []
-	
-	for jj in range( nGoC_pop):     
-		params["MF_GoC_pop_pairs"][jj][1,:]=np.mod(params["MF_GoC_pop_pairs"][jj][1,:], popsize)
-	
-	params["nPF"], params["PF_pos"], params["PF_GoC_pairs"] = nu.PF_conn( nPF, PF_loc_type, volume, PF_density, params["GoC_pos"],  PF_conntype, PF_connprob, PF_connGoC, PF_conn_maxdist, seed=simid)
-	params["PF_GoC_pop_pairs"] = []
-	for pid in usedID:
-		pairid = [x for x in range(params["PF_GoC_pairs"].shape[1]) if params["GoC_ParamID"][params["PF_GoC_pairs"][1,x]]==pid ]
-		params["PF_GoC_pop_pairs"].append( params["PF_GoC_pairs"][:,pairid] )
-	
-	for jj in range( nGoC_pop):     
-		params["PF_GoC_pop_pairs"][jj][1,:]=np.mod(params["PF_GoC_pop_pairs"][jj][1,:], popsize)
-	
-	
-	params["nBurst"] = nBurst
-	params["Burst_GoC"] = nu.get_perturbed_GoC( params["nGoC"], Burst_conntype, Burst_connprob, Burst_connGoC, seed=simid )
-	params["Burst_conn_pop"] = []
-	
-	for pid in usedID:
-		gocid = [x for x in range(params["Burst_GoC"].shape[0]) if params["GoC_ParamID"][params["Burst_GoC"][x]]==pid ]
-		params["Burst_conn_pop"].append( params["Burst_GoC"][gocid] )
-	
-	for jj in range( nGoC_pop):     
-			params["Burst_conn_pop"][jj]= np.mod(params["Burst_conn_pop"][jj], popsize)
-	'''
 	
 	return params
 	

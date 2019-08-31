@@ -196,8 +196,8 @@ def connect_inputs( maxn=0, frac= 0, density=6000, volume=[350,350,80], mult=0, 
 	if frac==0:
 		return 0, [], [], []
 	else:
-		nInp, Inp_pos = locate_GoC( maxn*frac, volume, 'density', density, seed=seed )
-		
+		nInp, Inp_pos = locate_GoC( int(maxn*frac), volume, 'Density', density, seed=seed )
+
 	nGoC = GoC_pos.shape[0]
 
 	### --- to add code for rosettes
@@ -215,7 +215,7 @@ def connect_inputs( maxn=0, frac= 0, density=6000, volume=[350,350,80], mult=0, 
 					connDist[jj]=1e9
 			conn_pairs = conn_pairs[:,[((abs(Inp_pos[conn_pairs[0,jj],0]- GoC_pos[conn_pairs[1,jj],0])<connDist[0])& (abs(Inp_pos[conn_pairs[0,jj],1]- GoC_pos[conn_pairs[1,jj],1])<connDist[1]) & (abs(Inp_pos[conn_pairs[0,jj],2]- GoC_pos[conn_pairs[1,jj],2])<connDist[2])) for jj in range(conn_pairs.shape[1])]]
 		else:
-			conn_pairs = conn_pairs[:,[((Inp_pos[conn_pairs[0,jj],0]- GoC_pos[conn_pairs[1,jj],0])**2 + (Inp_pos[conn_pairs[0,jj],1]- GoC_pos[conn_pairs[1,jj],1])**2 +(Inp_pos[conn_pairs[0,jj],2]- GoC_pos[conn_pairs[1,jj],2])**2)< connDist**2 for jj in range(conn_pairs.shape[1])]]
+			conn_pairs = conn_pairs[:,[(np.power(Inp_pos[conn_pairs[0,jj],0]- GoC_pos[conn_pairs[1,jj],0],2) + np.power(Inp_pos[conn_pairs[0,jj],1]- GoC_pos[conn_pairs[1,jj],1],2) + np.power(Inp_pos[conn_pairs[0,jj],2]- GoC_pos[conn_pairs[1,jj],2],2))< connDist[0]**2 for jj in range(conn_pairs.shape[1])]]
 			
 	### --- to add code for weight
 	conn_wt =  get_MF_GoC_synaptic_weights( conn_pairs, Inp_pos, GoC_pos, 'mult', conn_wt=connWeight )
