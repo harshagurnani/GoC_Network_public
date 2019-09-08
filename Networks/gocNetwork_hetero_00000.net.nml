@@ -12,6 +12,7 @@
     <transientPoissonFiringSynapse id="MF_Burst" averageRate="100 Hz" delay="2000 ms" duration="500 ms" synapse="MFGoC_SynMult" spikeTarget="./MFGoC_SynMult"/>
     <network id="gocNetwork_hetero" type="networkWithTemperature" temperature="23 degC">
         <population id="GoC_00025Pop" component="GoC_00025" size="9" type="populationList">
+			<property tag="color" value="0 0 0.8"/>
             <instance id="0">
                 <location x="228.756354912613347" y="40.25243009354201" z="76.022629147921961"/>
             </instance>
@@ -41,6 +42,7 @@
             </instance>
         </population>
         <population id="GoC_00305Pop" component="GoC_00305" size="9" type="populationList">
+			<property tag="color" value="0 0.8 0.8"/>
             <instance id="0">
                 <location x="230.038727849172346" y="267.989047950833537" z="44.326979040351532"/>
             </instance>
@@ -70,6 +72,7 @@
             </instance>
         </population>
         <population id="GoC_00848Pop" component="GoC_00848" size="9" type="populationList">
+			<property tag="color" value="0.8 0 0"/>
             <instance id="0">
                 <location x="181.861504028237164" y="198.096090699174624" z="35.293391407006155"/>
             </instance>
@@ -99,6 +102,7 @@
             </instance>
         </population>
         <population id="GoC_00901Pop" component="GoC_00901" size="9" type="populationList">
+			<property tag="color" value="0.8 0.8 0"/>
             <instance id="0">
                 <location x="339.639570357646107" y="244.686381926313004" z="71.278046394179142"/>
             </instance>
@@ -128,6 +132,7 @@
             </instance>
         </population>
         <population id="GoC_00956Pop" component="GoC_00956" size="9" type="populationList">
+			<property tag="color" value="0 0.8 0"/>
             <instance id="0">
                 <location x="277.837769194107409" y="253.891102460931819" z="43.315142449390763"/>
             </instance>
